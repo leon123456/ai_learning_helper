@@ -1,24 +1,25 @@
-# app/api/v1/routes_diagnostic.py
+# app/api/v1/routes_diagnose.py
+
 from fastapi import APIRouter, Depends
-from app.schemas.diagnostic import DiagnoseRequest, DiagnoseResponse, DiagnoseResult
-from app.api import deps
-from app.services.llm import LLMClient
+from app.schemas.diagnose import DiagnoseRequest, DiagnoseResult
+from app.services.diagnostic import DiagnosticEngine
+from app.api.deps import get_llm_client
 
 router = APIRouter()
 
-@router.post("/diagnose", response_model=DiagnoseResponse)
-async def diagnose(
-    req: DiagnoseRequest,
-    llm: LLMClient = Depends(deps.get_llm_client)
-):
-    # TODO: 调用 Diagnostic Agent Prompt
-    # 这部分暂时先用 mock 数据，之后替换为真正的 LLM 推理
-    result = DiagnoseResult(
-        correct=False,
-        mastery_score=40,
-        error_type=["概念不清"],
-        reason="学生没有正确理解一次函数的代入求值方法。",
-        next_action="建议先复习一次函数的定义和代入计算，再做 3 道类似练习题。"
-    )
 
-    return DiagnoseResponse(result=result)
+@router.post("/diagnose", response_model=DiagnoseResult)
+async def diagnose_problem(
+    req: DiagnoseRequest,
+    llm = Depends(get_llm_client)
+):
+    """
+    核心诊断接口：
+    - 自动判断题库内题目
+    - 自动求解题库外题目
+    - 主观题 + 客观题混合模式
+    - 自动缓存求解过的题目
+    """
+    engine = DiagnosticEngine(llm)
+    result = await engine.diagnose(req)
+    return result

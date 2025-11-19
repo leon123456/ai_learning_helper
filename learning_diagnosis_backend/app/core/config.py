@@ -1,14 +1,26 @@
 # app/core/config.py
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    ENV: str = "dev"
+    PROVIDER: str = "azure"     # azure | openai | deepseek | qwen
+
+    # OpenAI 官方
     OPENAI_API_KEY: str = ""
-    # 后面可以加 DB_URL、REDIS_URL 等
+
+    # Azure OpenAI
+    AZURE_OPENAI_ENDPOINT: str = ""
+    AZURE_OPENAI_API_KEY: str = ""
+    AZURE_OPENAI_API_VERSION: str = "2024-11-20"
+    AZURE_OPENAI_DEPLOYMENT: str = ""
+
+    # DeepSeek
+    DEEPSEEK_API_KEY: str = ""
+
+    # Qwen / DashScope
+    DASH_SCOPE_API_KEY: str = ""
 
     class Config:
         env_file = ".env"
-        env_file_encoding = "utf-8"
-
+        extra = "ignore"
 
 settings = Settings()
