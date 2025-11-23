@@ -171,11 +171,45 @@ class DiagnosticEngine:
         return resp
 
     # ===========================================
+    #  检查用户是否作答
+    # ===========================================
+    def is_answer_empty(self, user_answer: str) -> bool:
+        """判断用户答案是否为空（未作答）"""
+        if not user_answer:
+            return True
+        
+        # 去除空白字符后检查
+        cleaned = user_answer.strip()
+        if not cleaned:
+            return True
+        
+        # 检查是否是常见的"未作答"标识
+        empty_indicators = ["未作答", "未填写", "无", "空", "未答", "未填", "none", "null", "n/a", "na"]
+        if cleaned.lower() in [ind.lower() for ind in empty_indicators]:
+            return True
+        
+        return False
+
+    # ===========================================
     #  模块 3：完整诊断流程（混合模式）
     # ===========================================
     async def diagnose(self, req: DiagnoseRequest) -> DiagnoseResult:
         problem: Problem = req.problem
         user_answer: str = req.user_answer
+
+        # 0. 检查用户是否作答
+        if self.is_answer_empty(user_answer):
+            # 用户未作答，返回特殊诊断结果
+            return DiagnoseResult(
+                correct=False,
+                correct_answer="",  # 未作答时不需要正确答案
+                user_answer=user_answer or "(未作答)",
+                error_type="未作答",
+                analysis="检测到您尚未作答此题。请仔细阅读题目，尝试解答后再提交。",
+                mastery_score=0,
+                next_action="请先尝试解答题目，完成后可再次提交以获得诊断反馈。",
+                recommended_practice=[]
+            )
 
         # 1. 获取正确答案（题库内 or LLM fallback）
         if problem.correct_answer:

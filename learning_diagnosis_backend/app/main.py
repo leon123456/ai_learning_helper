@@ -26,6 +26,26 @@ app.include_router(routes_teacher.router, prefix="/api/v1", tags=["teacher"])
 app.include_router(routes_planner.router, prefix="/api/v1", tags=["planner"])
 
 
+@app.get("/")
+async def root():
+    """根路径，返回 API 信息"""
+    return {
+        "message": "Learning Diagnosis Backend API",
+        "version": "0.1.0",
+        "docs": {
+            "swagger": "/docs",
+            "redoc": "/redoc"
+        },
+        "endpoints": {
+            "health": "/health",
+            "ocr": "/api/v1/ocr/parse",
+            "diagnose": "/api/v1/diagnose",
+            "teacher": "/api/v1/teacher/*",
+            "planner": "/api/v1/planner/*"
+        }
+    }
+
+
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
