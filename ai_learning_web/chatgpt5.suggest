@@ -1,0 +1,561 @@
+/// file: package.json
+{
+  "name": "ai-learning-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.4.0",
+    "autoprefixer": "10.4.0",
+    "postcss": "8.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.0",
+    "@types/node": "20.0.0",
+    "typescript": "5.3.2",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.1.0"
+  }
+}
+
+/// file: next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+};
+module.exports = nextConfig;
+
+/// file: postcss.config.js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+/// file: tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+/// file: tsconfig.json
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+
+/// file: .eslintrc.json
+{
+  "extends": "next/core-web-vitals"
+}
+
+/// file: .gitignore
+node_modules
+.next
+.env
+.DS_Store
+
+/// file: app/globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+/// file: styles/shadcn.css
+/* reserved for shadcn/ui components */
+
+/// file: app/page.tsx
+import Link from "next/link";
+
+export default function HomePage() {
+  return (
+    <main className="p-6 flex flex-col items-center text-center">
+      <h1 className="text-3xl font-bold mb-4">AI 学习诊断系统</h1>
+      <p className="text-gray-600 mb-8 max-w-lg">
+        上传题目图片 → 自动识别 → AI 解题 → 学习诊断 → 推荐练习
+      </p>
+      <Link
+        href="/upload"
+        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+      >
+        开始使用
+      </Link>
+    </main>
+  );
+}
+
+/// file: app/upload/page.tsx
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+export default function UploadPage() {
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) {
+      setFile(f);
+      setPreview(URL.createObjectURL(f));
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file) return;
+
+    const form = new FormData();
+    form.append("file", file);
+
+    const res = await fetch("http://127.0.0.1:8000/api/v1/ocr/parse", {
+      method: "POST",
+      body: form,
+    });
+
+    const data = await res.json();
+    localStorage.setItem("ocr_result", JSON.stringify(data));
+    router.push("/review");
+  };
+
+  return (
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-4">上传题目图片</h1>
+      <input type="file" onChange={handleFile} />
+
+      {preview && (
+        <Image
+          src={preview}
+          width={300}
+          height={300}
+          alt="preview"
+          className="my-4 rounded-lg shadow"
+        />
+      )}
+
+      <button
+        onClick={handleUpload}
+        className="px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        提取题目内容
+      </button>
+    </main>
+  );
+}
+
+/// file: app/review/page.tsx
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function ReviewPage() {
+  const router = useRouter();
+  const [ocr, setOCR] = useState<any>(null);
+  const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("ocr_result");
+    if (saved) setOCR(JSON.parse(saved));
+  }, []);
+
+  const handleNext = () => {
+    localStorage.setItem("user_answer", answer);
+    router.push("/diagnose");
+  };
+
+  if (!ocr) return <p className="p-6">加载中...</p>;
+
+  const problem = ocr.problems?.[0];
+
+  return (
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-4">请确认题目并输入答案</h1>
+
+      <p className="mb-4 whitespace-pre-line">{problem.question}</p>
+
+      {problem.options?.map((o: string, i: number) => (
+        <p key={i}>{o}</p>
+      ))}
+
+      <input
+        className="mt-4 p-2 border rounded w-full"
+        placeholder="请输入你的答案，如 A 或具体结果"
+        value={answer}
+        onChange={(e) => setAnswer(e.target.value)}
+      />
+
+      <button
+        onClick={handleNext}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        开始诊断
+      </button>
+    </main>
+  );
+}
+
+/// file: app/diagnose/page.tsx
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function DiagnosePage() {
+  const router = useRouter();
+  const [result, setResult] = useState<any>(null);
+
+  useEffect(() => {
+    const ocr = localStorage.getItem("ocr_result");
+    const ans = localStorage.getItem("user_answer");
+    if (!ocr || !ans) return;
+
+    const fetchData = async () => {
+      const body = {
+        problem: JSON.parse(ocr).problems[0],
+        user_answer: ans,
+      };
+
+      const res = await fetch("http://127.0.0.1:8000/api/v1/diagnose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+      setResult(data);
+      localStorage.setItem("diagnosis", JSON.stringify(data));
+    };
+
+    fetchData();
+  }, []);
+
+  if (!result) return <p className="p-6">诊断中...</p>;
+
+  return (
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-2">诊断结果</h1>
+
+      <p>正确答案：{result.correct_answer}</p>
+      <p>你的答案：{result.user_answer}</p>
+      <p className="mt-2 font-semibold">分析：</p>
+      <p>{result.analysis}</p>
+
+      <button
+        onClick={() => router.push("/practice")}
+        className="mt-6 px-4 py-2 bg-green-600 text-white rounded"
+      >
+        获取推荐练习
+      </button>
+    </main>
+  );
+}
+
+/// file: app/practice/page.tsx
+"use client";
+import { useEffect, useState } from "react";
+
+export default function PracticePage() {
+  const [practice, setPractice] = useState<any>(null);
+
+  useEffect(() => {
+    const diagnosis = localStorage.getItem("diagnosis");
+    if (diagnosis) {
+      const diag = JSON.parse(diagnosis);
+
+      // GPT 生成推荐练习
+      const fetchPractice = async () => {
+        const res = await fetch("http://127.0.0.1:8000/api/v1/llm/generate_practice", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ knowledge: diag.error_type })
+        });
+
+        const data = await res.json();
+        setPractice(data);
+      };
+
+      fetchPractice();
+    }
+  }, []);
+
+  if (!practice) return <p className="p-6">生成练习中...</p>;
+
+  return (
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-4">推荐练习题</h1>
+
+      {practice.items?.map((item: any, i: number) => (
+        <div key={i} className="mb-4 p-4 bg-white rounded shadow">
+          <p className="font-semibold mb-2">题目 {i + 1}</p>
+          <p>{item.question}</p>
+          <p className="mt-2 text-sm text-gray-600">解析：{item.explanation}</p>
+        </div>
+      ))}
+    </main>
+  );
+}
+
+/// file: components/UploadBox.tsx
+"use client";
+import { useState } from "react";
+
+export default function UploadBox({ onSelect }: { onSelect: (f: File) => void }) {
+  const [dragging, setDragging] = useState(false);
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) onSelect(file);
+  };
+
+  return (
+    <div
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={handleDrop}
+      className={`border-2 border-dashed p-8 text-center rounded-lg cursor-pointer transition ${
+        dragging ? "bg-blue-50 border-blue-400" : "bg-white border-gray-300"
+      }`}
+    >
+      <p className="text-gray-600">拖拽图片到此处，或点击上传</p>
+      <input
+        type="file"
+        className="hidden"
+        id="file-input"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) onSelect(f);
+        }}
+      />
+      <label htmlFor="file-input" className="text-blue-600 underline cursor-pointer">
+        选择文件
+      </label>
+    </div>
+  );
+}
+
+/// file: components/ImagePreview.tsx
+import Image from "next/image";
+
+export default function ImagePreview({ src }: { src: string }) {
+  return (
+    <div className="my-4">
+      <Image
+        src={src}
+        width={350}
+        height={350}
+        alt="preview"
+        className="rounded-lg shadow"
+      />
+    </div>
+  );
+}
+
+/// file: components/OCRPreview.tsx
+export default function OCRPreview({ text }: { text: string }) {
+  return (
+    <div className="mt-4 p-4 bg-gray-100 rounded-lg whitespace-pre-line">
+      {text}
+    </div>
+  );
+}
+
+/// file: components/AnswerInput.tsx
+"use client";
+
+export default function AnswerInput({ value, onChange }: { value: string; onChange: (s: string) => void }) {
+  return (
+    <input
+      className="mt-4 p-2 border rounded w-full"
+      placeholder="请输入你的答案，如 A 或 1.1×10^8"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  );
+}
+
+/// file: components/DiagnosisCard.tsx
+export default function DiagnosisCard({ result }: { result: any }) {
+  return (
+    <div className="p-6 bg-white rounded-lg shadow">
+      <h2 className="text-xl font-bold mb-2">诊断结果</h2>
+      <p>正确答案：{result.correct_answer}</p>
+      <p>你的答案：{result.user_answer}</p>
+
+      <p className="mt-4 font-semibold">错误分析</p>
+      <p className="text-gray-700 mt-1">{result.analysis}</p>
+
+      <p className="mt-4 font-semibold">掌握程度：{result.mastery_score}/100</p>
+    </div>
+  );
+}
+
+/// file: components/PracticeList.tsx
+export default function PracticeList({ items }: { items: any[] }) {
+  return (
+    <div>
+      {items.map((item, i) => (
+        <div key={i} className="mb-4 p-4 bg-white shadow rounded-lg">
+          <p className="font-semibold">题目 {i + 1}</p>
+          <p className="mt-2">{item.question}</p>
+          <p className="text-sm text-gray-600 mt-2">解析：{item.explanation}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/// file: components/LoadingSpinner.tsx
+export default function LoadingSpinner() {
+  return (
+    <div className="flex justify-center p-8">
+      <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+    </div>
+  );
+}
+
+/// file: components/NavBar.tsx
+import Link from "next/link";
+
+export default function NavBar() {
+  return (
+    <nav className="w-full bg-white shadow p-4 flex gap-6 text-gray-700">
+      <Link href="/">首页</Link>
+      <Link href="/upload">上传</Link>
+      <Link href="/review">复核</Link>
+      <Link href="/diagnose">诊断</Link>
+      <Link href="/practice">练习推荐</Link>
+    </nav>
+  );
+}
+
+/// file: lib/types.ts
+export type ProblemType = "choice" | "fill" | "solve" | "proof" | "short_answer";
+
+export interface Problem {
+  type: ProblemType;
+  question: string;
+  options?: string[];
+  knowledge_points: string[];
+  difficulty: "easy" | "medium" | "hard";
+  correct_answer?: string | null;
+}
+
+export interface OCRResult {
+  raw_text: string;
+  problems: Problem[];
+}
+
+export interface RecommendedPracticeItem {
+  knowledge: string;
+  difficulty: string;
+  count: number;
+}
+
+export interface DiagnoseResult {
+  correct: boolean;
+  correct_answer: string;
+  user_answer: string;
+  error_type: string;
+  analysis: string;
+  mastery_score: number;
+  next_action: string;
+  recommended_practice: RecommendedPracticeItem[];
+}
+
+export interface GeneratedPracticeItem {
+  question: string;
+  explanation: string;
+}
+
+export interface GeneratedPracticeResponse {
+  items: GeneratedPracticeItem[];
+}
+
+/// file: lib/api.ts
+import type { OCRResult, DiagnoseResult, Problem, GeneratedPracticeResponse } from "./types";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+
+async function handleResponse<T>(res: Response): Promise<T> {
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Request failed: ${res.status} ${text}`);
+  }
+  return res.json() as Promise<T>;
+}
+
+export async function uploadImageForOCR(file: File): Promise<OCRResult> {
+  const form = new FormData();
+  form.append("file", file);
+
+  const res = await fetch(`${BASE_URL}/api/v1/ocr/parse`, {
+    method: "POST",
+    body: form,
+  });
+
+  return handleResponse<OCRResult>(res);
+}
+
+export async function diagnoseProblem(problem: Problem, userAnswer: string): Promise<DiagnoseResult> {
+  const payload = {
+    problem,
+    user_answer: userAnswer,
+  };
+
+  const res = await fetch(`${BASE_URL}/api/v1/diagnose`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  return handleResponse<DiagnoseResult>(res);
+}
+
+export async function generatePractice(knowledge: string): Promise<GeneratedPracticeResponse> {
+  const res = await fetch(`${BASE_URL}/api/v1/llm/generate_practice`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ knowledge }),
+  });
+
+  return handleResponse<GeneratedPracticeResponse>(res);
+}
