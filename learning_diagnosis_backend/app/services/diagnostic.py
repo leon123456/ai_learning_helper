@@ -118,13 +118,16 @@ class DiagnosticEngine:
 你是一个智能求解机器人，你的任务是根据题目自动求出唯一正确答案。
 如果是选择题，请返回选项字母（A/B/C/D）。
 如果是填空题，请返回数值或表达式。
+如果题目包含配图信息，请结合配图描述进行分析。
 严格返回 JSON：
 {
   "llm_answer": "...",
   "llm_reason": "..."
 }
 """
-        user_prompt = f"题目如下：\n\n{problem.question}\n选项：{problem.options}"
+        # 使用包含配图描述的完整题目文本
+        full_question = problem.get_full_question()
+        user_prompt = f"题目如下：\n\n{full_question}\n选项：{problem.options}"
 
         raw = await self.llm.chat(
             system_prompt=system_prompt,
@@ -154,8 +157,13 @@ class DiagnosticEngine:
     async def llm_diagnose(self, problem: Problem, correct_answer: str, user_answer: str):
         system_prompt = open("app/prompt/diagnostic.md").read()
 
+        # 构建诊断请求，包含配图信息
+        problem_data = problem.model_dump()
+        # 添加完整题目文本（包含配图描述）
+        problem_data["full_question"] = problem.get_full_question()
+        
         user_prompt = {
-            "problem": problem.model_dump(),
+            "problem": problem_data,
             "correct_answer": correct_answer,
             "user_answer": user_answer
         }

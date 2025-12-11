@@ -2,9 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Upload
-
-Box from '@/components/UploadBox'
+import UploadBox from '@/components/UploadBox'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { parseImage, fileToBase64, isValidImage, formatErrorMessage } from '@/lib/api'
 import { useAppStore } from '@/lib/store'

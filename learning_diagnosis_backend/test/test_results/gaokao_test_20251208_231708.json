@@ -1,0 +1,663 @@
+{
+  "test_time": "2025-12-08T23:17:08.693371",
+  "test_images": [
+    "2025gaokao1.png",
+    "2025gaokao2.png"
+  ],
+  "results": [
+    {
+      "image_name": "2025gaokao1.png",
+      "status": "success",
+      "recognition_time": 18.313278913497925,
+      "total_questions": 5,
+      "paper_info": {
+        "page_id": 0,
+        "width": 1068,
+        "height": 1146,
+        "sections": []
+      },
+      "questions": [
+        {
+          "index": 0,
+          "type": "choice",
+          "section_title": "一、选择题:本大题共8小题,每小题5分,共计40分.每小题给出的四个选项中,只有一个选项是正确的.请把正确的选项填涂在答题卡相应的位置上.",
+          "question": "1.(1+5i)i的虚部为",
+          "options": [
+            "A.-1",
+            "B.0",
+            "C.1",
+            "D.6"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 1,
+          "type": "choice",
+          "section_title": "一、选择题:本大题共8小题,每小题5分,共计40分.每小题给出的四个选项中,只有一个选项是正确的.请把正确的选项填涂在答题卡相应的位置上.",
+          "question": "2.设全集U={1,2,3,4,5,6,7,8},,集合A={1,3,5},,则$$C _ { U } A$$中元素个数为",
+          "options": [
+            "A.0",
+            "B.3",
+            "C.5",
+            "D.8"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 2,
+          "type": "choice",
+          "section_title": "一、选择题:本大题共8小题,每小题5分,共计40分.每小题给出的四个选项中,只有一个选项是正确的.请把正确的选项填涂在答题卡相应的位置上.",
+          "question": "$$A . \\sqrt 2$$ B.2 $$C . \\sqrt 7$$ $$D . 2 \\sqrt 2$$",
+          "options": [
+            "$$A . \\frac { \\pi } { 6 }$$",
+            "$$B . \\frac { \\pi } { 3 }$$",
+            "$$C . \\frac { \\pi } { 2 }$$",
+            "$$D . \\frac { 4 \\pi } { 3 }$$"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 4,
+          "type": "choice",
+          "section_title": "一、选择题:本大题共8小题,每小题5分,共计40分.每小题给出的四个选项中,只有一个选项是正确的.请把正确的选项填涂在答题卡相应的位置上.",
+          "question": "$$A . - \\frac { 1 } { 2 }$$ $$B . - \\frac { 1 } { 4 }$$ $$C . \\frac { 1 } { 4 }$$ $$D . \\frac { 1 } { 2 }$$",
+          "options": null,
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 5,
+          "type": "choice",
+          "section_title": "一、选择题:本大题共8小题,每小题5分,共计40分.每小题给出的四个选项中,只有一个选项是正确的.请把正确的选项填涂在答题卡相应的位置上.",
+          "question": "6.帆船比赛中,运动员可借助风力计测定风速的大小和方向,测出的结果在航海学中称为视风风速,视风风速对应的向量,是真风风速对应的向量与船行风速对应的向量之和,其中船行风速对应的向量与船速对应的向量大小相等,方向相反.图1给出了部分风力等级、名称与风速大小的对应关系.已知某帆船运动员在某时刻测得的视风风速对应的向量与船速对应的向量如图2(风速的大小和向量的大小相同,单位{m/s}),,则真风为",
+          "options": [
+            "A.轻风",
+            "B.微风",
+            "C.和风",
+            "D.劲风"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        }
+      ],
+      "figures": [
+        {
+          "box": {
+            "angle": -90,
+            "h": 911,
+            "w": 123,
+            "x": 501,
+            "y": 690
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 46,
+              "y": 628
+            },
+            {
+              "x": 957,
+              "y": 628
+            },
+            {
+              "x": 957,
+              "y": 751
+            },
+            {
+              "x": 46,
+              "y": 751
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 875,
+            "w": 121,
+            "x": 482,
+            "y": 547
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 44,
+              "y": 486
+            },
+            {
+              "x": 920,
+              "y": 486
+            },
+            {
+              "x": 920,
+              "y": 608
+            },
+            {
+              "x": 44,
+              "y": 608
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 915,
+            "w": 249,
+            "x": 506,
+            "y": 880
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 48,
+              "y": 755
+            },
+            {
+              "x": 964,
+              "y": 755
+            },
+            {
+              "x": 964,
+              "y": 1005
+            },
+            {
+              "x": 48,
+              "y": 1005
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 802,
+            "w": 77,
+            "x": 447,
+            "y": 296
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 46,
+              "y": 257
+            },
+            {
+              "x": 848,
+              "y": 257
+            },
+            {
+              "x": 848,
+              "y": 334
+            },
+            {
+              "x": 46,
+              "y": 334
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 837,
+            "w": 108,
+            "x": 460,
+            "y": 413
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 42,
+              "y": 359
+            },
+            {
+              "x": 878,
+              "y": 360
+            },
+            {
+              "x": 878,
+              "y": 468
+            },
+            {
+              "x": 42,
+              "y": 467
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 793,
+            "w": 74,
+            "x": 446,
+            "y": 211
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 49,
+              "y": 175
+            },
+            {
+              "x": 842,
+              "y": 175
+            },
+            {
+              "x": 842,
+              "y": 248
+            },
+            {
+              "x": 50,
+              "y": 247
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "image_name": "2025gaokao2.png",
+      "status": "success",
+      "recognition_time": 29.03141713142395,
+      "total_questions": 5,
+      "paper_info": {
+        "page_id": 0,
+        "width": 1146,
+        "height": 1306,
+        "sections": []
+      },
+      "questions": [
+        {
+          "index": 0,
+          "type": "fill",
+          "section_title": "",
+          "question": "",
+          "options": null,
+          "has_position": true,
+          "has_figure": true,
+          "figure_count": 2,
+          "figure_description": "配图1: 题目配图（位置: x=687, y=64, 尺寸: 265x243）\n配图2: subject_table（位置: x=105, y=48, 尺寸: 514x265）",
+          "figures": [
+            {
+              "type": "subject_pattern",
+              "x": 687,
+              "y": 64,
+              "w": 265,
+              "h": 243,
+              "points": [
+                {
+                  "x": 687,
+                  "y": 64
+                },
+                {
+                  "x": 952,
+                  "y": 64
+                },
+                {
+                  "x": 952,
+                  "y": 307
+                },
+                {
+                  "x": 687,
+                  "y": 307
+                }
+              ]
+            },
+            {
+              "type": "subject_table",
+              "x": 105,
+              "y": 48,
+              "w": 514,
+              "h": 265,
+              "points": [
+                {
+                  "x": 105,
+                  "y": 48
+                },
+                {
+                  "x": 619,
+                  "y": 48
+                },
+                {
+                  "x": 619,
+                  "y": 313
+                },
+                {
+                  "x": 105,
+                  "y": 313
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "type": "choice",
+          "section_title": "",
+          "question": "7.若圆$$x ^ { 2 } + \\left( y + 2 \\right) ^ { 2 } = r ^ { 2 } \\left( r > 0 \\right)$$上到直线$$y = \\sqrt 3 x + 2$$的距离为1的点有且仅有2个,则r的取值范围是",
+          "options": [
+            "A.(0,1)",
+            "B.(1,3)",
+            "C.(3,+∞)",
+            "D.(0,+∞)"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 2,
+          "type": "choice",
+          "section_title": "",
+          "question": "8.若实数x,y,z满足$$2 + \\log _ { 2 } x = 3 + \\log _ { 3 } y = 5 + \\log _ { 5 } z ,$$,则x,y,z的大小关系不可能是",
+          "options": [
+            "A.x>y>z",
+            "B.x>z>y",
+            "C.y>x>z",
+            "D.y>z>x"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 0,
+          "type": "choice",
+          "section_title": "二、选择题:本题共3小题,每小题6分,共18分。在每小题给出的选项中,有多项符合",
+          "question": "$$A . A D \\bot { A _ { 1 } } C$$ B.BC⊥平面$$A A _ { 1 } D$$$$C . A D \\parallel { A _ { 1 } } { B _ { 1 } }$$ $$D . C C _ { 1 } / /$$平面$$A A _ { 1 } D$$",
+          "options": null,
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        },
+        {
+          "index": 1,
+          "type": "choice",
+          "section_title": "二、选择题:本题共3小题,每小题6分,共18分。在每小题给出的选项中,有多项符合",
+          "question": "10.设抛物线$$C : y ^ { 2 } = 6 x$$的焦点为F,过F的直线交C于A、B,过A作$$l : x = - \\frac { 3 } { 2 }$$的垂线交于D过F且垂直于AB的直线交于E,则",
+          "options": [
+            "A.|AD|=|AF|",
+            "B.|AE|=|AB|",
+            "C.|AB|≥6",
+            "D.|AE|⋅|BE|≥18"
+          ],
+          "has_position": true,
+          "has_figure": false,
+          "figure_count": 0,
+          "figure_description": null,
+          "figures": []
+        }
+      ],
+      "figures": [
+        {
+          "box": {
+            "angle": -90,
+            "h": 0,
+            "w": 0,
+            "x": 0,
+            "y": 0
+          },
+          "h": 243,
+          "points": [
+            {
+              "x": 687,
+              "y": 64
+            },
+            {
+              "x": 952,
+              "y": 64
+            },
+            {
+              "x": 952,
+              "y": 307
+            },
+            {
+              "x": 687,
+              "y": 307
+            }
+          ],
+          "type": "subject_pattern",
+          "w": 265,
+          "x": 687,
+          "y": 64
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 0,
+            "w": 0,
+            "x": 0,
+            "y": 0
+          },
+          "h": 265,
+          "points": [
+            {
+              "x": 105,
+              "y": 48
+            },
+            {
+              "x": 619,
+              "y": 48
+            },
+            {
+              "x": 619,
+              "y": 313
+            },
+            {
+              "x": 105,
+              "y": 313
+            }
+          ],
+          "type": "subject_table",
+          "w": 514,
+          "x": 105,
+          "y": 48
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 913,
+            "w": 178,
+            "x": 543,
+            "y": 432
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 86,
+              "y": 343
+            },
+            {
+              "x": 998,
+              "y": 343
+            },
+            {
+              "x": 998,
+              "y": 521
+            },
+            {
+              "x": 86,
+              "y": 521
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 916,
+            "w": 106,
+            "x": 540,
+            "y": 603
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 83,
+              "y": 550
+            },
+            {
+              "x": 998,
+              "y": 550
+            },
+            {
+              "x": 998,
+              "y": 656
+            },
+            {
+              "x": 83,
+              "y": 656
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 899,
+            "w": 242,
+            "x": 524,
+            "y": 1160
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 74,
+              "y": 1040
+            },
+            {
+              "x": 973,
+              "y": 1040
+            },
+            {
+              "x": 973,
+              "y": 1280
+            },
+            {
+              "x": 74,
+              "y": 1280
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 743,
+            "w": 188,
+            "x": 432,
+            "y": 921
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 61,
+              "y": 827
+            },
+            {
+              "x": 804,
+              "y": 827
+            },
+            {
+              "x": 804,
+              "y": 1015
+            },
+            {
+              "x": 61,
+              "y": 1015
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "box": {
+            "angle": -90,
+            "h": 879,
+            "w": 296,
+            "x": 523,
+            "y": 174
+          },
+          "h": 0,
+          "points": [
+            {
+              "x": 84,
+              "y": 26
+            },
+            {
+              "x": 961,
+              "y": 26
+            },
+            {
+              "x": 961,
+              "y": 322
+            },
+            {
+              "x": 84,
+              "y": 322
+            }
+          ],
+          "type": "subject_question",
+          "w": 0,
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+  ]
+}

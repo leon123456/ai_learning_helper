@@ -2,17 +2,15 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { GraduationCap, Home, Upload, FileQuestion, BarChart3, BookOpen } from 'lucide-react'
+import { GraduationCap, Home, Upload, FileImage, FileQuestion, BarChart3 } from 'lucide-react'
 
 export default function NavBar() {
   const pathname = usePathname()
 
   const navItems = [
     { href: '/', label: '首页', icon: Home },
-    { href: '/upload', label: '上传题目', icon: Upload },
-    { href: '/review', label: '答题', icon: FileQuestion },
-    { href: '/diagnose', label: '诊断', icon: BarChart3 },
-    { href: '/practice', label: '练习', icon: BookOpen },
+    { href: '/upload', label: '单题诊断', icon: Upload },
+    { href: '/paper', label: '试卷诊断', icon: FileImage },
   ]
 
   return (

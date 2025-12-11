@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Upload, Brain, Target, Sparkles, ArrowRight } from 'lucide-react'
+import { Upload, Brain, Target, Sparkles, ArrowRight, FileImage, Layers } from 'lucide-react'
 
 export default function HomePage() {
   return (
@@ -14,14 +14,39 @@ export default function HomePage() {
         <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
           拍照识别试题 · AI 自动诊断错因 · 生成个性化练习
         </p>
-        <Link
-          href="/upload"
-          className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:shadow-lg hover:scale-105 transition-all"
-        >
-          <Upload className="h-5 w-5" />
-          <span>开始上传题目</span>
-          <ArrowRight className="h-5 w-5" />
-        </Link>
+        
+        {/* 两个上传入口 */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* 单题上传 */}
+          <Link
+            href="/upload"
+            className="group relative w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-white border-2 border-indigo-200 text-indigo-700 px-8 py-4 rounded-xl text-lg font-medium hover:border-indigo-400 hover:bg-indigo-50 hover:shadow-lg transition-all"
+          >
+            <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
+              <Upload className="h-5 w-5" />
+            </div>
+            <div className="text-left">
+              <span className="block font-semibold">上传单题</span>
+              <span className="block text-sm text-gray-500 font-normal">拍一道题，快速诊断</span>
+            </div>
+            <ArrowRight className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </Link>
+          
+          {/* 试卷上传 */}
+          <Link
+            href="/paper"
+            className="group relative w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-medium hover:shadow-xl hover:scale-105 transition-all"
+          >
+            <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+              <FileImage className="h-5 w-5" />
+            </div>
+            <div className="text-left">
+              <span className="block font-semibold">上传试卷</span>
+              <span className="block text-sm text-white/80 font-normal">整张试卷，批量诊断</span>
+            </div>
+            <ArrowRight className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity" />
+          </Link>
+        </div>
       </div>
 
       {/* Features */}
@@ -84,14 +109,24 @@ export default function HomePage() {
       {/* CTA */}
       <div className="mt-24 text-center bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-12">
         <h2 className="text-3xl font-bold mb-4">准备好提升成绩了吗？</h2>
-        <p className="text-gray-600 mb-8">现在就开始你的智能学习之旅</p>
-        <Link
-          href="/upload"
-          className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:shadow-lg hover:scale-105 transition-all"
-        >
-          <span>立即开始</span>
-          <ArrowRight className="h-5 w-5" />
-        </Link>
+        <p className="text-gray-600 mb-8">选择适合你的方式，开始智能学习之旅</p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            href="/upload"
+            className="inline-flex items-center space-x-2 bg-white text-indigo-600 border-2 border-indigo-200 px-6 py-3 rounded-lg font-medium hover:bg-indigo-50 hover:border-indigo-300 transition-all"
+          >
+            <Upload className="h-5 w-5" />
+            <span>单题诊断</span>
+          </Link>
+          <Link
+            href="/paper"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all"
+          >
+            <FileImage className="h-5 w-5" />
+            <span>试卷批量诊断</span>
+            <ArrowRight className="h-5 w-5" />
+          </Link>
+        </div>
       </div>
     </div>
   )

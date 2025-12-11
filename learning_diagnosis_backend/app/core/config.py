@@ -1,5 +1,11 @@
 # app/core/config.py
+from pathlib import Path
 from pydantic_settings import BaseSettings
+
+# 获取项目根目录（config.py 所在目录的上两级）
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+ENV_FILE = PROJECT_ROOT / ".env"
+
 
 class Settings(BaseSettings):
     PROVIDER: str = "azure"     # azure | openai | deepseek | qwen
@@ -43,12 +49,16 @@ class Settings(BaseSettings):
     ALIYUN_ACCESS_KEY_SECRET: str = ""
     ALIYUN_OCR_ENDPOINT: str = "cn-hangzhou.aliyuncs.com"  # 默认杭州区域，格式: cn-hangzhou.aliyuncs.com
     
+    # 阿里云 API 市场 APPCODE（用于试卷切题等云市场服务）
+    # 获取方式：https://market.aliyun.com -> 购买服务后在控制台查看
+    ALIYUN_APPCODE: str = ""
+    
     # OCR 提供者选择
     # 可选值: llm (使用 LLM vision) | aliyun (使用阿里云 OCR) | auto (优先阿里云，失败则回退 LLM)
     OCR_PROVIDER: str = "auto"
 
     class Config:
-        env_file = ".env"
+        env_file = str(ENV_FILE)  # 使用绝对路径
         extra = "ignore"
 
 settings = Settings()
